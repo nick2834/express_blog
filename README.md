@@ -21,13 +21,46 @@ CREATE TABLE `sys_user` (
 
 ```
 // 创建分类表
-  CREATE TABLE `category` (
-    `id` int NOT NULL AUTO_INCREMENT COMMENT '编号',
-    `name` varchar(50) NOT NULL COMMENT '分类名称',
-    `mainKey` varchar(50) NOT NULL COMMENT '关键字',
-    `parentId` int DEFAULT NULL COMMENT '父级id',
-    PRIMARY KEY (`id`)
-  ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='文章分类';
+CREATE TABLE `category` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `name` varchar(50) NOT NULL COMMENT '分类名称',
+  `mainKey` varchar(50) NOT NULL COMMENT '关键字',
+  `parentId` int DEFAULT NULL COMMENT '父级id',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='文章分类';
+```
+
+```
+CREATE TABLE `article` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '索引',
+  `title` varchar(50) COLLATE utf8_unicode_ci NOT NULL COMMENT '标题',
+  `author` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '作者',
+  `content` text COLLATE utf8_unicode_ci NOT NULL COMMENT '内容',
+  `category_id` int NOT NULL COMMENT '分类id',
+  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '描述',
+  `create_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '发布时间',
+  PRIMARY KEY (`id`),
+  KEY `category_id` (`category_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+```
+
+```
+CREATE TABLE `tag_relationship` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `article_id` int NOT NULL,
+  `tag_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `article_id` (`article_id`),
+  KEY `tag_id` (`tag_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='标签与文章对应关系表';
+```
+
+```
+CREATE TABLE `tags` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='文章标签';
 ```
 
 #### 启动

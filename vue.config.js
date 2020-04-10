@@ -12,7 +12,10 @@ module.exports = {
     proxy: {
       "/users/*": {
         target: "http://localhost:3000"
-      }
+      },
+      "/article/*": {
+        target: "http://localhost:3000"
+      },
     }
   }
 };
