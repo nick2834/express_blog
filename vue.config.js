@@ -10,12 +10,9 @@ module.exports = {
     https: false, // 协议
     hotOnly: false, // 没啥效果，热模块，webpack已经做好了
     proxy: {
-      "/users/*": {
+      "/api/*": {
         target: "http://localhost:3000"
-      },
-      "/article/*": {
-        target: "http://localhost:3000"
-      },
+      }
     }
   }
 };

@@ -80,13 +80,13 @@ import axios from 'axios'
     methods:{
       login(){
         this.loading = true;
-        axios.post("/users/login",{loginForm:this.loginForm}).then((response)=>{
+        axios.post("/api/users/login",{loginForm:this.loginForm}).then((response)=>{
           let res = response.data;
         //   console.log("res"+res.result.name);
           if(res.status == '0'){
             this.errorTip = false;
             alert("登录成功"+res.result.name);
-            this.$router.push("/home")
+            this.$router.push("/")
           }else{
             this.errorTip = true;
             this.loading = false;

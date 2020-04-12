@@ -1,35 +1,53 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-
+import Layout from "@/pages/admin/layout";
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/",
-    redirect: "/login",
+    path: "/login",
+    component: () => import("../views/login/login.vue"),
+    hidden: true
+  },
+
+  {
+    path: "/404",
+    component: () => import("@/pages/404"),
+    hidden: true
   },
   {
-    path: "/login",
-    name: "Login",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/login.vue"),
+    path: "/",
+    component: Layout,
+    redirect: "/dashboard",
+    children: [
+      {
+        path: "dashboard",
+        name: "Dashboard",
+        component: () => import("../views/dashboard")
+      }
+    ]
   },
   {
     path: "/category",
-    name: "Category",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/category.vue"),
-  },
-  {
-    path: "/article",
-    name: "Article",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/article.vue"),
+    component: Layout,
+    redirect: "/category",
+    children: [
+      {
+        path: "category",
+        name: "Category",
+        component: () => import("../views/category.vue")
+      },
+      {
+        path: "article",
+        name: "Article",
+        component: () => import("../views/article.vue")
+      }
+    ]
   }
 ];
 
 const router = new VueRouter({
-  routes,
+  routes
 });
 
 export default router;
