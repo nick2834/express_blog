@@ -53,8 +53,7 @@
   </el-form>
 </template>
 <script type="text/ecmascript-6">
-import Cookies from 'js-cookie'
-import axios from 'axios'
+import { login,regist } from '@/api/admin/user'
   export default {
     name:'Login',
     data(){
@@ -80,24 +79,22 @@ import axios from 'axios'
     methods:{
       login(){
         this.loading = true;
-        axios.post("/api/users/login",{loginForm:this.loginForm}).then((response)=>{
-          let res = response.data;
-        //   console.log("res"+res.result.name);
-          if(res.status == '0'){
+        login(this.loginForm).then(({data}) =>{
+          console.log(data)
+          if(data && data.status == 0){
             this.errorTip = false;
-            alert("登录成功"+res.result.name);
-            this.$router.push("/")
+            this.$router.push('/')
           }else{
             this.errorTip = true;
             this.loading = false;
-            return;
           }
         })
       },
       reset(){
         this.loading = true;
-        axios.post("/users/register",{loginForm:this.loginForm}).then((response)=>{
-          console.log(response)
+        regist(this.loginForm).then(({data}) =>{
+          this.loading = false;
+          console.log(data)
         })
       }
     }

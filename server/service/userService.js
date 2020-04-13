@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const fs = require("fs");
 const path = require("path");
 exports.login = (req, res, next) => {
-  const { username, password } = req.body.loginForm;
+  const { username, password } = req.body;
   let cert = fs.readFileSync(path.resolve(__dirname, "../jwt/jwt.pem"));
   db.base("sys_user")
     .where({ name: username, password })
@@ -38,7 +38,7 @@ exports.login = (req, res, next) => {
 };
 
 exports.register = (req, res, next) => {
-  const { username, password } = req.body.loginForm;
+  const { username, password } = req.body;
   db.base("sys_user")
     .where({ name: username, password })
     .select()

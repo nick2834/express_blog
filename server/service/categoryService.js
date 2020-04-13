@@ -38,7 +38,7 @@ exports.add = (req, res, next) => {
 exports.del = (req, res, next) => {
   const { id } = req.params;
   db.base(tableName)
-    .where({ id })
+    .where({ cid: id })
     .delete()
     .then(data => {
       // 1 删除成功
@@ -53,7 +53,7 @@ exports.del = (req, res, next) => {
 exports.update = (req, res, next) => {
   const { id, name, mainKey } = req.body;
   db.base(tableName)
-    .where({ id, name, mainKey })
+    .where({ cid:id, name, mainKey })
     .update()
     .then(data => {});
 };

@@ -23,24 +23,20 @@ const routes = [
       {
         path: "dashboard",
         name: "Dashboard",
-        component: () => import("../views/dashboard")
+        component: () => import("../views/dashboard"),
+        meta: { title: "Dashboard", icon: "house" }
       }
     ]
   },
   {
-    path: "/category",
+    path: "/article",
     component: Layout,
-    redirect: "/category",
     children: [
       {
-        path: "category",
-        name: "Category",
-        component: () => import("../views/category.vue")
-      },
-      {
-        path: "article",
+        path: "index",
         name: "Article",
-        component: () => import("../views/article.vue")
+        component: () => import("../views/article"),
+        meta: { title: "Form", icon: "document" }
       }
     ]
   }

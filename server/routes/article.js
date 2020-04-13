@@ -1,12 +1,8 @@
 var express = require("express");
 var router = express.Router();
 const service = require("../service/articleService");
-/* GET users listing. */
-router.get("/", function(req, res, next) {
-  res.send("respond with a resource");
-});
-router.get("/list", service.list);
+router.post("/list", service.list);
 router.post("/add", service.add);
 // router.post("/del/:id", service.del);
-router.post("/getByid/:id", service.getByid);
+router.post("/getByid", service.getByid);
 module.exports = router;
