@@ -22,5 +22,5 @@ db.table("sys_user")
 
 router.get("/check", (req, res, next) => {
   let { userToken } = req.query.body;
-  let cert = fs.readFileSync(path.resolve(__dirname, "../jwt/jwt_pub.pem"));
+  let cert = fs.readFileSync(path.resolve(__dirname, "../auth/jwt_pub.pem"));
 });

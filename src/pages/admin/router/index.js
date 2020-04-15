@@ -24,19 +24,49 @@ const routes = [
         path: "dashboard",
         name: "Dashboard",
         component: () => import("../views/dashboard"),
-        meta: { title: "Dashboard", icon: "house" }
+        meta: { title: "首页", icon: "house" }
       }
     ]
   },
   {
     path: "/article",
     component: Layout,
+    redirect: "noRedirect",
+    name: "ComponentDemo",
+    meta: {
+      title: "文章",
+      icon: "component"
+    },
     children: [
       {
         path: "index",
-        name: "Article",
-        component: () => import("../views/article"),
-        meta: { title: "Form", icon: "document" }
+        name: "ArticleList",
+        component: () => import("../views/articles"),
+        meta: {
+          title: "文章列表",
+          icon: "document",
+          activeMenu: "/article/index"
+        }
+      },
+      {
+        path: "add",
+        name: "AddArticle",
+        component: () => import("../views/articles/add"),
+        meta: {
+          title: "新增文章",
+          icon: "document",
+          activeMenu: "/article/index"
+        }
+      },
+      {
+        path: "edit/:id(\\d+)",
+        name: "EditArticle",
+        component: () => import("../views/articles/edit"),
+        meta: {
+          title: "编辑文章",
+          icon: "document",
+          activeMenu: "/article/index"
+        }
       }
     ]
   }

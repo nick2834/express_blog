@@ -8,8 +8,9 @@
           :class="isCollapse ? 'el-icon-s-fold' : 'el-icon-s-unfold'"
           @click="isCollapse = !isCollapse"
         ></i>
+        <breadcrumb class="breadcrumb-container" />
       </el-header>
-      <!-- <navbar :isCollapse="isCollapse" @toggleClick="toggleClick"></navbar> -->
+      <scroll-nav></scroll-nav>
       <el-main class="app_main">
         <transition name="fade-transform" mode="out-in">
           <router-view :key="key" />
@@ -20,15 +21,16 @@
 </template>
 
 <script>
+import Breadcrumb from "@/components/Breadcrumb";
 import sidebarItem from "./sidebarItem";
-// import navbar from "./navbar";
+import scrollNav from "./scrollNav";
 export default {
   data() {
     return {
       isCollapse: true
     };
   },
-  components: { sidebarItem },
+  components: { sidebarItem, Breadcrumb,scrollNav },
   computed: {
     key() {
       return this.$route.path;
@@ -47,6 +49,8 @@ export default {
   background: #fff;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
   padding: 0 !important;
+  display: flex;
+  z-index: 100;
   .fold_icon {
     font-size: 20px;
     line-height: 50px;
@@ -70,7 +74,17 @@ export default {
 .hamburger.is-active {
   transform: rotate(180deg);
 }
+.scroll_nav {
+  height: 34px;
+  width: 100%;
+  background: #fff;
+  border-bottom: 1px solid #d8dce5;
+  -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12),
+    0 0 3px 0 rgba(0, 0, 0, 0.04);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04);
+}
 .el-main {
-  height: calc(100vh - 50px);
+  // height: calc(100vh - 50px);
+  height: calc(100vh - 85px);
 }
 </style>

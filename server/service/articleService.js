@@ -34,30 +34,63 @@ exports.add = (req, res, next) => {
       true
     )
     .then(data => {
-      console.log(moment().format("YYYY-MM-DD HH:mm:ss"));
-      res.json({});
+      res.json({
+        status: "0",
+        result: data
+      });
     });
 };
 // 删除
+exports.del = (req, res, next) => {
+  const { id } = req.body;
+  db.base(tableName)
+    .where({ id })
+    .delete()
+    .then(data => {
+      res.json({
+        status: data == 0 ? "1" : "0",
+        msg: `${data == 0 ? "删除失败" : "删除成功"}`
+      });
+    });
+};
 // 修改
 // 查询
 exports.getByid = (req, res, next) => {
   const { id, category_id } = req.body;
-  db.base(tableName)
-    .join(`category on article.category_id = category.cid`)
-    .select()
-    .then(data => {
-      if (data.length > 0) {
-        let result = data.filter(item => item.id == id);
-        res.json({
-          status: "0",
-          result: result[0]
-        });
-      } else {
-        res.json({
-          status: "1",
-          result: null
-        });
-      }
-    });
+  if (category_id) {
+    db.base(tableName)
+      .join(`category on article.category_id = category.cid`)
+      .select()
+      .then(data => {
+        if (data.length > 0) {
+          let result = data.filter(item => item.id == id);
+          res.json({
+            status: "0",
+            result: result[0]
+          });
+        } else {
+          res.json({
+            status: "1",
+            result: null
+          });
+        }
+      });
+  } else {
+    db.base(tableName)
+      .where({ id })
+      .select()
+      .then(data => {
+        if (data.length > 0) {
+          res.json({
+            status: "0",
+            result: data[0]
+          });
+        } else {
+          res.json({
+            status: "1",
+            result: null
+          });
+        }
+      });
+  }
 };

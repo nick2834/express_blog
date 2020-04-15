@@ -7,7 +7,7 @@
     </div>
     <el-table :data="tableData" border style="width: 100%">
       <el-table-column prop="id" label="ID" width="50"> </el-table-column>
-      <el-table-column prop="title" label="标题" width="120"> </el-table-column>
+      <el-table-column prop="title" label="标题" width="250"> </el-table-column>
       <el-table-column prop="author" label="作者" width="120">
       </el-table-column>
       <el-table-column prop="description" label="描述" width="250">
@@ -19,7 +19,17 @@
           <el-button @click="handleClick(scope.row)" type="text" size="small"
             >查看</el-button
           >
-          <el-button type="text" size="small">编辑</el-button>
+          <router-link
+            :to="'/article/edit/' + scope.row.id"
+            style="margin: 0 10px"
+          >
+            <el-button type="text" size="small">
+              编辑
+            </el-button>
+          </router-link>
+          <el-button type="text" size="small" @click="handleDelete(scope.row)"
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
@@ -31,13 +41,31 @@
       :total="totalCount"
     >
     </el-pagination>
+    <article-drawer
+      :drawer="drawer"
+      :aData="aData"
+      @handleClose="handleClose"
+    ></article-drawer>
   </section>
 </template>
 
 <script>
-import { getList, getOneByid } from "@/api/admin/article";
+import { getList, getOneByid, deleteArticle } from "@/api/admin/article";
 import { parseTime } from "@/utils";
+import articleDrawer from "./articleDrawer";
 export default {
+  data() {
+    return {
+      pageIndex: 1,
+      pageSize: 10,
+      totalPage: 0,
+      totalCount: 0,
+      tableData: [],
+      drawer: false,
+      aData: null
+    };
+  },
+  components: { articleDrawer },
   methods: {
     getLists() {
       getList({
@@ -57,8 +85,23 @@ export default {
       });
     },
     handleClick(row) {
-      getOneByid(row).then(res => {
-        console.log(res);
+      getOneByid(row).then(({ data }) => {
+        console.log(data);
+        if (data.status == 0) {
+          this.aData = data.result;
+          this.drawer = true;
+        }
+      });
+    },
+    handleClose() {
+      this.drawer = false;
+    },
+    handleDelete(row) {
+      const { id } = row;
+      deleteArticle({ id }).then(({ data }) => {
+        if (data.status == 0) {
+          this.getLists();
+        }
       });
     },
     handleCurrentChange(val) {
@@ -67,18 +110,9 @@ export default {
     },
     handleAdd() {
       this.$router.push({
-        path: "/add"
+        path: "/article/add"
       });
     }
-  },
-  data() {
-    return {
-      pageIndex: 1,
-      pageSize: 10,
-      totalPage: 0,
-      totalCount: 0,
-      tableData: []
-    };
   },
   mounted() {
     this.getLists();

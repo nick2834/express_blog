@@ -5,10 +5,12 @@
       :class="isCollapse ? 'el-icon-s-fold' : 'el-icon-s-unfold'"
       @click="openCollapse"
     ></i>
+    <breadcrumb class="breadcrumb-container" />
   </el-header>
 </template>
 
 <script>
+import Breadcrumb from "@/components/Breadcrumb";
 export default {
   props: {
     isCollapse: {
@@ -16,6 +18,7 @@ export default {
       default: true
     }
   },
+  components: { Breadcrumb },
   methods: {
     openCollapse() {
       this.$emit("toggleClick");

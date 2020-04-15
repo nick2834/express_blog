@@ -1,10 +1,7 @@
 const db = require("../sql/dbConfig");
-const jwt = require("jsonwebtoken");
-const fs = require("fs");
-const path = require("path");
+const auth = require("../auth");
 exports.login = (req, res, next) => {
   const { username, password } = req.body;
-  let cert = fs.readFileSync(path.resolve(__dirname, "../jwt/jwt.pem"));
   db.base("sys_user")
     .where({ name: username, password })
     .select()
@@ -16,17 +13,7 @@ exports.login = (req, res, next) => {
           result: "",
         });
       } else {
-        let userToken = jwt.sign(
-          {
-            id: data[0].password,
-            username: data[0].name,
-          },
-          cert,
-          {
-            algorithm: "RS256",
-            expiresIn: "15min",
-          }
-        );
+        let userToken = auth.sign(data[0].password,data[0].name)
         let result = {token:userToken}
         res.json({
           status: "0",

@@ -1,7 +1,7 @@
 <template>
   <el-aside :width="isCollapse ? '64px' : '200px'"
     ><el-menu
-      default-active="1"
+      :default-active="activeMenu"
       class="el-menu-vertical-demo"
       :collapse="isCollapse"
       background-color="#304156"
@@ -14,7 +14,7 @@
         <i class="el-icon-house"></i>
         <span slot="title">导航二</span>
       </el-menu-item>
-      <el-menu-item index="/article">
+      <el-menu-item index="/article/index">
         <i class="el-icon-setting"></i>
         <span slot="title">导航四</span>
       </el-menu-item>
@@ -28,6 +28,18 @@ export default {
     isCollapse: {
       type: Boolean,
       default: true
+    }
+  },
+  computed: {
+    activeMenu() {
+      const route = this.$route;
+      const { meta, path } = route;
+      console.log(meta)
+      console.log(path)
+      if (meta.activeMenu) {
+        return meta.activeMenu;
+      }
+      return path;
     }
   }
 };
