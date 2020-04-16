@@ -22,8 +22,7 @@ class InitManager {
       res.header("Content-Type", "application/json;charset=utf-8");
       next(); // 执行下一个路由
     });
-    const apiDirecotry = `${process.cwd()}/routes`;
-    console.log("====================>", apiDirecotry);
+    const apiDirectory = `${process.cwd()}/routes`;
     InitManager.app.use("/", indexRouter);
     InitManager.app.use("/api/users", usersRouter);
     InitManager.app.use("/api/article", articleRouter);
