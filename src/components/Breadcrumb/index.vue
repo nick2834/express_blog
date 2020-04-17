@@ -5,7 +5,6 @@
         <span
           v-if="item.redirect === 'noRedirect' || index == levelList.length - 1"
           class="no-redirect"
-          @click.prevent="handleClick(item)"
           >{{ item.meta.title }}</span
         >
         <a v-else @click.prevent="handleLink(item)">{{ item.meta.title }}</a>
@@ -15,6 +14,8 @@
 </template>
 
 <script>
+import pathToRegexp from "path-to-regexp";
+
 export default {
   data() {
     return {
@@ -42,7 +43,7 @@ export default {
       const first = matched[0];
 
       if (!this.isDashboard(first)) {
-        matched = [{ path: "/dashboard", meta: { title: "首页" } }].concat(
+        matched = [{ path: "/dashboard", meta: { title: "Dashboard" } }].concat(
           matched
         );
       }
@@ -61,10 +62,9 @@ export default {
       );
     },
     pathCompile(path) {
-      const { pathToRegexp, match, parse, compile } = require("path-to-regexp");
       // To solve this problem https://github.com/PanJiaChen/vue-element-admin/issues/561
       const { params } = this.$route;
-      var toPath = compile(path);
+      var toPath = pathToRegexp.compile(path);
       return toPath(params);
     },
     handleLink(item) {
@@ -74,11 +74,6 @@ export default {
         return;
       }
       this.$router.push(this.pathCompile(path));
-    },
-    handleClick(item) {
-      console.log(item);
-      // const { redirect, path } = item;
-      // this.$router.push({ path: "/article" });
     }
   }
 };

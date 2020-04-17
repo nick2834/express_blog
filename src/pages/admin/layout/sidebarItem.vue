@@ -14,7 +14,7 @@
         <i class="el-icon-house"></i>
         <span slot="title">导航二</span>
       </el-menu-item>
-      <el-menu-item index="/article/index">
+      <el-menu-item index="/article/list">
         <i class="el-icon-setting"></i>
         <span slot="title">导航四</span>
       </el-menu-item>
@@ -34,8 +34,6 @@ export default {
     activeMenu() {
       const route = this.$route;
       const { meta, path } = route;
-      console.log(meta)
-      console.log(path)
       if (meta.activeMenu) {
         return meta.activeMenu;
       }

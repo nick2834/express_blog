@@ -31,7 +31,7 @@ const routes = [
   {
     path: "/article",
     component: Layout,
-    redirect: "noRedirect",
+    redirect: "/article/list",
     name: "ComponentDemo",
     meta: {
       title: "文章",
@@ -39,13 +39,13 @@ const routes = [
     },
     children: [
       {
-        path: "index",
+        path: "list",
         name: "ArticleList",
         component: () => import("../views/articles"),
         meta: {
           title: "文章列表",
           icon: "document",
-          activeMenu: "/article/index"
+          activeMenu: "/article/list"
         }
       },
       {
@@ -55,7 +55,7 @@ const routes = [
         meta: {
           title: "新增文章",
           icon: "document",
-          activeMenu: "/article/index"
+          activeMenu: "/article/list"
         }
       },
       {
@@ -65,8 +65,10 @@ const routes = [
         meta: {
           title: "编辑文章",
           icon: "document",
-          activeMenu: "/article/index"
-        }
+          activeMenu: "/article/list",
+          noCache: true
+        },
+        hidden: true
       }
     ]
   }
