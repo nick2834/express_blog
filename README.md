@@ -9,24 +9,24 @@ node mysql 操作封装类，基于 promise，借鉴 75team 开源项目 thinkjs
 ```
 // 创建用户表
 CREATE TABLE `sys_user` (
-    `id` bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
-    `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户名',
-    `password` varchar(100) DEFAULT NULL COMMENT '密码',
-    `email` varchar(100) DEFAULT NULL COMMENT '邮箱',
-    `mobile` varchar(100) DEFAULT NULL COMMENT '手机号',
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `name` (`name`)
-  ) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 COMMENT='用户管理';
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户名',
+  `password` varchar(100) DEFAULT NULL COMMENT '密码',
+  `email` varchar(100) DEFAULT NULL COMMENT '邮箱',
+  `mobile` varchar(100) DEFAULT NULL COMMENT '手机号',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 COMMENT='用户管理';
 ```
 
 ```
 // 创建分类表
 CREATE TABLE `category` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `cid` int NOT NULL AUTO_INCREMENT COMMENT '编号',
   `name` varchar(50) NOT NULL COMMENT '分类名称',
   `mainKey` varchar(50) NOT NULL COMMENT '关键字',
   `parentId` int DEFAULT NULL COMMENT '父级id',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`cid`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='文章分类';
 ```
 
@@ -35,13 +35,13 @@ CREATE TABLE `article` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '索引',
   `title` varchar(50) COLLATE utf8_unicode_ci NOT NULL COMMENT '标题',
   `author` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '作者',
-  `content` text COLLATE utf8_unicode_ci NOT NULL COMMENT '内容',
+  `content` mediumtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '内容',
   `category_id` int NOT NULL COMMENT '分类id',
   `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '描述',
   `create_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '发布时间',
   PRIMARY KEY (`id`),
   KEY `category_id` (`category_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 ```
 
 ```
