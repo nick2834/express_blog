@@ -15,6 +15,14 @@ export function getCategoryList(data) {
   });
 }
 
+export function addCategory(data){
+  return request({
+    url: "/category/add",
+    method: "post",
+    data
+  });
+}
+
 export function addArticle(data) {
   return request({
     url: "/article/add",
